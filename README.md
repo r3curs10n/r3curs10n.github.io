@@ -1,62 +1,122 @@
-# Astro Starter Kit: Blog
+# Astro Theme: Minimal Blog
 
-```sh
-npm create astro@latest -- --template blog
+Welcome to **Astro Theme: Minimal Blog**, an ideal option to start sharing your ideas. It's easy to set up and features everything you'd need for a blog.
+
+[**Demo Website**](https://astro-theme-minimal-blog.lekoarts.de)
+
+## ✨ Features
+
+- Write blog posts with MDX
+- Styled with [Tailwind](https://tailwindcss.com/)
+- Code blocks powered by [Expressive Code](https://expressive-code.com/)
+- Custom asides component
+- Live coding powered by [Sandpack](https://github.com/codesandbox/sandpack)
+- RSS, Sitemap
+- Light/Dark/System color mode toggle
+- Add tags to your blog posts
+- [Pagefind](https://pagefind.app/) search
+
+## 🚀 Getting started
+
+1. **Important:** Ensure that [pnpm](https://pnpm.io/installation) is installed
+1. Clone the [astro-theme-minimal-blog](https://github.com/LekoArts/astro-theme-minimal-blog) repository.
+1. Install dependencies.
+   ```shell
+   pnpm install
+   ```
+1. Run the development server.
+   ```shell
+   pnpm dev
+   ```
+
+## 📝 Using & modifying this theme
+
+### Add content
+
+This theme features a CLI to help you scaffold new blog posts. It asks you questions to fill out the frontmatter and creates a file in the end. Run the CLI:
+
+```shell
+pnpm assistant
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+If you want to extend it, change the [`assistant.ts`](./scripts/assistant.ts) file.
 
-Features:
+### Change constants
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+Parts of the theme are referencing [`constants.ts`](./src/constants.ts) to e.g. set the site title or main navigation. Modify its contents to suit your site before deploying it.
 
-## 🚀 Project Structure
+### Change existing tags / Add new tags
 
-Inside of your Astro project, you'll see the following folders and files:
+Inside [`constants.ts`](./src/constants.ts) the `FRONTMATTER_TAGS` map contains the available tags for your site. You need to add your display name and slug of the tag inside this map. The display name will be used in the UI and the slug will be used in the URL.
 
-```text
-├── public/
-├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+It's referenced by Astro's content collections and also by the [`assistant.ts`](./scripts/assistant.ts) file.
+
+You can add a new tag like so:
+
+```ts
+export const FRONTMATTER_TAGS = new Map(
+	[
+		// Existing tags...
+		['Display name', 'slug-of-your-tag'] as const,
+	],
+)
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## 🔍 Reference
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Blog post frontmatter
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+By default, these frontmatter fields are available. You need to change [`content.config.ts`](./src/content.config.ts) to adjust it.
 
-Any static assets, like images, can be placed in the `public/` directory.
+```yaml
+title: Markdown Reference Overview
+slug: markdown-reference-overview
+description: A post showcasing the markdown formatting of a post
+date: 2025-02-18
+lastUpdated: 2025-02-18
+tags:
+  - General
+  - MDX
+searchIndex: true
+image: https://absolute-link.google.com/image.png
+```
 
-## 🧞 Commands
+### Custom MDX components
 
-All commands are run from the root of the project, from a terminal:
+#### `<Aside>`
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```md
+:::note
+Text
+:::
 
-## 👀 Want to learn more?
+:::caution[Watch out!]
+Text
+:::
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+:::tip
+Text
+:::
 
-## Credit
+:::danger
+Text
+:::
+```
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Read the [Aside Example](./content/blog/2025-04-02--mdx-asides/index.mdx) to learn more.
+
+#### `<Playground>`
+
+````md
+<Playground template="react">
+
+```js name=App.js active
+export default function App() {
+  return <h1>Hello World</h1>
+}
+```
+
+</Playground>
+````
+
+Read the [Playground Example](./content/blog/2025-06-23--live-coding-with-sandpack/index.mdx) to learn more.

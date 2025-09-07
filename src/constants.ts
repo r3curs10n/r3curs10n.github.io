@@ -1,0 +1,94 @@
+type MapKey<T extends Map<any, any>> = T extends Map<infer K, any> ? K : never
+
+/**
+ * Metadata for your site
+ */
+export const SITE: Record<string, string> = {
+	/**
+	 * Base URL of your site, used in sitemap generation
+	 */
+	url: 'https://r3curs10n.github.io',
+	/**
+	 * Site-wide title
+	 */
+	title: 'Musings by Shreyas',
+	/**
+	 * Used on index page and as a fallback if no title is set
+	 */
+	titleDefault: 'Mysings by Shreyas',
+	/**
+	 * Used in meta tags, RSS feed, and other places
+	 */
+	description: 'Blog by Shreyas Basarge. I write about AI, programming, philosophy, history, leadership and more.',
+	/**
+	 * Language used in the <html> tag
+	 */
+	lang: 'en-US',
+	/**
+	 * Name of the image inside `public` folder that should be used as a default og:image
+	 */
+	defaultOgImage: '/og-image.png',
+	/**
+	 * Default author name that gets added to meta tags
+	 */
+	defaultAuthor: 'Shreyas Basarge',
+}
+
+interface Header {
+	internal: Array<{ title: string, url: string }>
+	external: Array<{ title: string, url: string, props?: Record<string, unknown> }>
+}
+
+/**
+ * Links used in the header
+ */
+export const HEADER: Header = {
+	/**
+	 * Internal links to other subpages shown in the header navigation
+	 */
+	internal: [
+		{
+			title: 'Blog',
+			url: '/blog/',
+		},
+		{
+			title: 'About',
+			url: '/',
+		},
+	],
+	/**
+	 * Arbitrary list of links (e.g. social media) shown on the right side of the header
+	 */
+	external: [
+		{
+			title: 'LinkedIn',
+			url: 'https://www.linkedin.com/in/shreyas-basarge-b4ba4653/',
+			props: {
+				target: '_blank',
+			},
+		},
+	],
+}
+
+/**
+ * A map of name - slug pairs
+ */
+export const FRONTMATTER_TAGS = new Map(
+	[
+		['General', 'general'] as const,
+		['Coding', 'coding'] as const,
+		['MDX', 'mdx'] as const,
+		['Open Source', 'open-source'] as const,
+		['서울', '서울'] as const,
+	],
+)
+
+export type FrontmatterTag = MapKey<typeof FRONTMATTER_TAGS>
+
+export const SKIP_NAV_ID = 'skip-to-content'
+
+/**
+ * Available "asides" that can be used in MDX files
+ */
+export const ASIDE_TYPES = ['note', 'tip', 'caution', 'danger'] as const
+export type AsideType = (typeof ASIDE_TYPES)[number]
