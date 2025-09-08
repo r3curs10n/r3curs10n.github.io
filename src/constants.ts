@@ -7,15 +7,15 @@ export const SITE: Record<string, string> = {
 	/**
 	 * Base URL of your site, used in sitemap generation
 	 */
-	url: 'https://r3curs10n.github.io',
+	url: 'https://beyond=algorithms.io',
 	/**
 	 * Site-wide title
 	 */
-	title: 'Musings by Shreyas',
+	title: 'Beyond Algorithms',
 	/**
 	 * Used on index page and as a fallback if no title is set
 	 */
-	titleDefault: 'Mysings by Shreyas',
+	titleDefault: 'Beyond Algorithms',
 	/**
 	 * Used in meta tags, RSS feed, and other places
 	 */
