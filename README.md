@@ -1,122 +1,162 @@
-# Astro Theme: Minimal Blog
+# UINUX Blog
 
-Welcome to **Astro Theme: Minimal Blog**, an ideal option to start sharing your ideas. It's easy to set up and features everything you'd need for a blog.
+A calm, writing-first blogging system built with Astro.
 
-[**Demo Website**](https://astro-theme-minimal-blog.lekoarts.de)
+## What it is
 
-## ✨ Features
+UINUX Blog is a static blog system designed for long-form writing. It prioritizes typography, whitespace, and readability over visual complexity. It uses Markdown for content, file-based routing, and ships minimal client-side JavaScript (search only).
 
-- Write blog posts with MDX
-- Styled with [Tailwind](https://tailwindcss.com/)
-- Code blocks powered by [Expressive Code](https://expressive-code.com/)
-- Custom asides component
-- Live coding powered by [Sandpack](https://github.com/codesandbox/sandpack)
-- RSS, Sitemap
-- Light/Dark/System color mode toggle
-- Add tags to your blog posts
-- [Pagefind](https://pagefind.app/) search
+## What it is not
 
-## 🚀 Getting started
+- Not a theme. There are no color presets, dark mode toggles, or visual variants.
+- Not a CMS. There is no admin panel, no database, no integrations.
+- Not a marketing tool. There are no newsletter signups, analytics, or growth hacks.
+- Not a portfolio. There are no image galleries, project showcases, or landing pages.
 
-1. **Important:** Ensure that [pnpm](https://pnpm.io/installation) is installed
-1. Clone the [astro-theme-minimal-blog](https://github.com/LekoArts/astro-theme-minimal-blog) repository.
-1. Install dependencies.
-   ```shell
-   pnpm install
-   ```
-1. Run the development server.
-   ```shell
-   pnpm dev
-   ```
+## Who it is for
 
-## 📝 Using & modifying this theme
+Writers who want a quiet place to publish. People who value clarity over features. Anyone who prefers to write in Markdown and deploy a static site.
 
-### Add content
+## Who it is not for
 
-This theme features a CLI to help you scaffold new blog posts. It asks you questions to fill out the frontmatter and creates a file in the end. Run the CLI:
+Anyone who needs a visual builder, dynamic content, user accounts, or comments. If you need those things, this is not the right tool.
 
-```shell
-pnpm assistant
+## Getting started
+
+### Prerequisites
+
+- Node.js 18 or later
+
+### Install
+
+```
+npm install
 ```
 
-If you want to extend it, change the [`assistant.ts`](./scripts/assistant.ts) file.
+### Start writing
 
-### Change constants
-
-Parts of the theme are referencing [`constants.ts`](./src/constants.ts) to e.g. set the site title or main navigation. Modify its contents to suit your site before deploying it.
-
-### Change existing tags / Add new tags
-
-Inside [`constants.ts`](./src/constants.ts) the `FRONTMATTER_TAGS` map contains the available tags for your site. You need to add your display name and slug of the tag inside this map. The display name will be used in the UI and the slug will be used in the URL.
-
-It's referenced by Astro's content collections and also by the [`assistant.ts`](./scripts/assistant.ts) file.
-
-You can add a new tag like so:
-
-```ts
-export const FRONTMATTER_TAGS = new Map(
-	[
-		// Existing tags...
-		['Display name', 'slug-of-your-tag'] as const,
-	],
-)
-```
-
-## 🔍 Reference
-
-### Blog post frontmatter
-
-By default, these frontmatter fields are available. You need to change [`content.config.ts`](./src/content.config.ts) to adjust it.
-
-```yaml
-title: Markdown Reference Overview
-slug: markdown-reference-overview
-description: A post showcasing the markdown formatting of a post
-date: 2025-02-18
-lastUpdated: 2025-02-18
-tags:
-  - General
-  - MDX
-searchIndex: true
-image: https://absolute-link.google.com/image.png
-```
-
-### Custom MDX components
-
-#### `<Aside>`
+1. Create a new `.md` or `.mdx` file in `src/content/posts/`
+2. Add frontmatter:
 
 ```md
-:::note
-Text
-:::
+---
+title: "Your Post Title"
+description: "A short description of the post."
+date: 2026-02-07
+---
 
-:::caution[Watch out!]
-Text
-:::
-
-:::tip
-Text
-:::
-
-:::danger
-Text
-:::
+Your content here.
 ```
 
-Read the [Aside Example](./content/blog/2025-04-02--mdx-asides/index.mdx) to learn more.
+3. Run the dev server:
 
-#### `<Playground>`
-
-````md
-<Playground template="react">
-
-```js name=App.js active
-export default function App() {
-  return <h1>Hello World</h1>
-}
+```
+npm run dev
 ```
 
-</Playground>
-````
+4. Open `http://localhost:4321`
 
-Read the [Playground Example](./content/blog/2025-06-23--live-coding-with-sandpack/index.mdx) to learn more.
+That is it. You are writing.
+
+### Google Search Console
+
+To enable Google Search Console verification, create a `.env` file:
+
+```
+PUBLIC_GOOGLE_SITE_VERIFICATION=your-verification-code
+```
+
+Get the code from Google Search Console > Settings > Ownership verification > HTML tag.
+
+See `.env.example` for reference.
+
+### Build for production
+
+```
+npm run build
+```
+
+Output is in the `dist/` directory. Deploy it anywhere that serves static files.
+
+## Structure
+
+```
+src/
+  components/
+    Layout.astro      Page shell, meta, fonts
+    Nav.astro          Site navigation
+    Footer.astro       Site footer
+    Heading.astro      Typographic heading
+    Article.astro      Post wrapper with metadata
+    Prose.astro        Markdown content styling
+  content/
+    config.ts          Content collection schema
+    posts/             Markdown files go here
+  pages/
+    index.astro              Home (post list)
+    search.astro             Search page (client-side)
+    search-index.json.ts     Static search index (built at build time)
+    about.astro              About page
+    rss.xml.ts               RSS feed
+    posts/[...slug].astro    Individual post pages
+  styles/
+    global.css         Design tokens and base styles
+```
+
+## Design decisions
+
+- **Serif body text** (Newsreader): optimized for sustained reading
+- **Sans-serif headings** (Inter): clear hierarchy without competing with body text
+- **640px content width**: prevents eye fatigue on long lines
+- **Minimal client-side JS**: only used for search; all other pages are static HTML and CSS
+- **No dark mode**: one mode, one experience, no maintenance surface
+- **No component library**: six components, no more
+
+## SEO
+
+Built-in, zero-dependency SEO on every page:
+
+- **Canonical URLs** on all pages
+- **Open Graph meta** (og:title, og:description, og:url, og:type, og:site_name, og:image)
+- **Twitter Card meta** (summary or summary_large_image)
+- **JSON-LD structured data**:
+  - `WebSite` on the home page
+  - `BlogPosting` on each post (headline, datePublished, author, publisher)
+  - `AboutPage` on the about page
+- **Google Search Console** verification via environment variable
+- **RSS feed** at `/rss.xml`
+
+No third-party SEO libraries. No sitemap generator. No tracking.
+
+## Search
+
+Client-side search powered by a static JSON index built at build time.
+
+- No external services or APIs
+- No dependencies
+- Index includes title, description, and full post body
+- Debounced input with instant results
+- Supports `?q=` query parameter for direct linking
+- Available at `/search`
+
+## Content model
+
+Posts require three frontmatter fields:
+
+| Field         | Type   | Required |
+|---------------|--------|----------|
+| `title`       | string | yes      |
+| `description` | string | yes      |
+| `date`        | date   | yes      |
+
+No tags. No categories. No authors. Write and publish.
+
+## Environment variables
+
+| Variable | Required | Description |
+|---|---|---|
+| `PUBLIC_GOOGLE_SITE_VERIFICATION` | no | Google Search Console verification code |
+
+## License
+
+MIT
